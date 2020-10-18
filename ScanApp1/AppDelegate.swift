@@ -7,17 +7,37 @@
 //
 
 import UIKit
+import Firebase
+import LineSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+            
+        //Firebase
+        FirebaseApp.configure()
+        
+        //LINEログイン
+        LoginManager.shared.setup(channelID: "1655107304", universalLinkURL: nil)
+        
         return true
     }
+    //LINEログイン(iOS 12以前)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return LoginManager.shared.application(app, open: url)
+    }
 
+//iOS 13以降では、UISceneDelegateオブジェクトを呼び出して、URLを開きます。
+//    // SceneDelegate.swiftに記述
+//    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+//        _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url)
+//    }
+    
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
