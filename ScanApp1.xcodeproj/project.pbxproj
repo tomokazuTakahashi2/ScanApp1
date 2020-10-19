@@ -21,6 +21,8 @@
 		645FCDEA253C842100942896 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDE9253C842100942896 /* EditViewController.swift */; };
 		645FCDEC253CC42B00942896 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDEB253CC42B00942896 /* DetailViewController.swift */; };
 		645FCDEE253D963A00942896 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDED253D963A00942896 /* SettingViewController.swift */; };
+		645FCDF1253E34C700942896 /* card.json in Resources */ = {isa = PBXBuildFile; fileRef = 645FCDEF253E34C700942896 /* card.json */; };
+		645FCDF2253E34C700942896 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 645FCDF0253E34C700942896 /* scan.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		645FCDE9253C842100942896 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		645FCDEB253CC42B00942896 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		645FCDED253D963A00942896 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		645FCDEF253E34C700942896 /* card.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = card.json; sourceTree = SOURCE_ROOT; };
+		645FCDF0253E34C700942896 /* scan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scan.json; sourceTree = SOURCE_ROOT; };
 		7F36B41DAD22A9C8FE6C6807 /* Pods-ScanApp1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanApp1.release.xcconfig"; path = "Target Support Files/Pods-ScanApp1/Pods-ScanApp1.release.xcconfig"; sourceTree = "<group>"; };
 		9E44A3E44C7E0017B8F68AF5 /* Pods_ScanApp1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScanApp1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB04E3F4A4B46B07785E4BE1 /* Pods-ScanApp1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanApp1.debug.xcconfig"; path = "Target Support Files/Pods-ScanApp1/Pods-ScanApp1.debug.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				645FCDD6253AD3C600942896 /* Assets.xcassets */,
 				645FCDD8253AD3C600942896 /* LaunchScreen.storyboard */,
 				645FCDDB253AD3C600942896 /* Info.plist */,
+				645FCDEF253E34C700942896 /* card.json */,
+				645FCDF0253E34C700942896 /* scan.json */,
 				645FCDE3253AF9F800942896 /* GoogleService-Info.plist */,
 			);
 			path = ScanApp1;
@@ -174,7 +180,9 @@
 			files = (
 				645FCDDA253AD3C600942896 /* LaunchScreen.storyboard in Resources */,
 				645FCDD7253AD3C600942896 /* Assets.xcassets in Resources */,
+				645FCDF1253E34C700942896 /* card.json in Resources */,
 				645FCDE4253AF9F800942896 /* GoogleService-Info.plist in Resources */,
+				645FCDF2253E34C700942896 /* scan.json in Resources */,
 				645FCDD5253AD3C200942896 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,6 +36,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //ナビゲーションバーを非表示（表示・・・false）
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        
         //黒背景
         blackView.frame = self.view.bounds //画面全体にblackViewを適用する
         blackView.backgroundColor = .black
@@ -88,7 +91,7 @@ class DetailViewController: UIViewController {
             //閉じるボタンをつける
             self.closeButton.layer.zPosition = 2
             self.closeButton.frame = CGRect(x: 0, y: self.view.frame.size.height - 50, width: 50, height: 50)
-            self.closeButton.setImage(UIImage(named: ""), for: .normal)
+            self.closeButton.setImage(UIImage(named: "closeButton"), for: .normal)
             self.closeButton.addTarget(self, action: #selector(self.tapCloseButton), for: .touchUpInside)
             self.view.addSubview(self.closeButton)
         })
@@ -103,6 +106,7 @@ class DetailViewController: UIViewController {
             
             self.imageView.layer.zPosition = 1
             let transAnimation1 = CGAffineTransform(rotationAngle: CGFloat(0 * CGFloat.pi/180))
+            self.imageView.transform = transAnimation1
             self.imageView.frame = CGRect(x: self.imageView_x, y: self.imageView_y, width: self.imageView_w, height: self.imageView_h)
             //ナビゲーションを再開する
             self.navigationController?.setNavigationBarHidden(false, animated: true)

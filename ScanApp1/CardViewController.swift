@@ -10,15 +10,19 @@ import UIKit
 import SDWebImage
 import Firebase
 import MBDocCapture
+import Pastel
 
 class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ImageScannerControllerDelegate {
     
     var displayName = String()
     let refreshControl = UIRefreshControl()
+    //グラデーション
+    var pastelView1 = PastelView()
 
     @IBOutlet weak var myProfileImageView: UIImageView!
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backGroundImageView: UIImageView!
     
     weak var element: Element?
     var listOfData = [Element]()
@@ -32,7 +36,7 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //UserDefaultsにログイン履歴を記録
         UserDefaults.standard.set(1, forKey: "loginOK")
         
-        //ナビゲーションバーを非表示（表示・・・faise）
+        //ナビゲーションバーを非表示（表示・・・false）
         navigationController?.setNavigationBarHidden(true, animated: true)
         
         //引っ張って更新
@@ -49,7 +53,7 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         displayName = UserDefaults.standard.object(forKey: "displayName")as! String
         
         
-        var pictureURLString = UserDefaults.standard.value(forKey: "pictureURLString")as! NSData
+        let pictureURLString = UserDefaults.standard.value(forKey: "pictureURLString")as! NSData
         self.myProfileImageView.image = UIImage(data: pictureURLString as Data)
         
         displayNameLabel.text = displayName
@@ -70,10 +74,60 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //backGroundImageViewにグラデーション背景を設置
+        if UserDefaults.standard.object(forKey: "image") != nil{
+            
+            var data = Data()
+            data = UserDefaults.standard.object(forKey: "image")as! Data
+            backGroundImageView.image = UIImage(data: data)
+        }
+        
+        //グラデーション
+        pastelView1.removeFromSuperview(); graduationStart1()
+        NotificationCenter.default.addObserver(self, selector:
+            #selector(viewWillEnterForeground(
+                notification:)), name: UIApplication.willEnterForegroundNotification,
+                                 object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+            #selector(viewDidEnterBackground(
+                notification:)), name: UIApplication.didEnterBackgroundNotification,
+                                 object: nil)
+        
+        //戻るボタン
+        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
         fetchData()
     }
-    
-    
+//MARK:-グラデーション
+    @objc func viewWillEnterForeground(notification: Notification) {
+        print("フォアグラウンド")
+        pastelView1.removeFromSuperview()
+        graduationStart1()
+    }
+    // AppDelegate -> applicationDidEnterBackgroundの通知
+    @objc func viewDidEnterBackground(notification: Notification) {
+        print("バックグラウンド")
+    }
+    func graduationStart1(){
+        pastelView1 = PastelView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height:
+            self.view.frame.size.height))
+        // Custom Direction
+        pastelView1.startPastelPoint = .bottomLeft
+        pastelView1.endPastelPoint = .topRight
+        // Custom Duration
+        pastelView1.animationDuration = 2.0
+        // Custom Color
+        pastelView1.setColors([UIColor(red: 156/255, green: 39/255, blue: 176/255, alpha: 1.0), UIColor(red: 255/255, green: 64/255, blue: 129/255, alpha: 1.0), UIColor(red: 123/255, green: 31/255, blue: 162/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 76/255, blue: 255/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 158/255, blue: 255/255, alpha: 1.0), UIColor(red: 90/255, green: 120/255, blue: 127/255, alpha: 1.0),
+                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
+        pastelView1.startAnimation()
+        view.insertSubview(pastelView1, at: 0)
+    }
+
 //MARK:-テーブルビュー
     //セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -107,7 +161,7 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let dateUnix = Double(listOfData[indexPath.row].createAt!)as! TimeInterval
         let date = Date(timeIntervalSince1970: dateUnix/1000)
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-mm-dd hh:mm"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
         let dateStr: String = formatter.string(from: date)
         creatAtLabel.text = dateStr
         
@@ -181,6 +235,7 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let scannerViewController = ImageScannerController(delegate:self)
         //ドキュメントの表と裏をスキャンする
         scannerViewController.shouldScanTwoFaces = false
+        present(scannerViewController,animated: true)
     }
     //ユーザーがドキュメントをスキャンしたことをデリゲートに通知します。
     /// -パラメーター：
@@ -189,11 +244,12 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     /// -ディスカッション：デリゲートによるこのメソッドの実装では、イメージスキャナーコントローラーを閉じる必要があります。
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
         
+        scanner.dismiss(animated: true){
         //値を保持して画面遷移
         let editVC = self.storyboard?.instantiateViewController(withIdentifier: "edit")as! EditViewController
         editVC.cardImage = results.scannedImage
         self.navigationController?.pushViewController(editVC, animated: true)
-        
+        }
     }
     //ユーザーがドキュメントをスキャンしたことをデリゲートに通知します。
     /// -パラメーター：
@@ -201,17 +257,17 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     ///    - page1Results：ユーザースキャンするページ1の結果
     ///    - page2Results：2ページをスキャンし、ユーザーの結果
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithPage1Results page1Results: ImageScannerResults, andPage2Results page2Results: ImageScannerResults) {
-        //戻る
+        //閉じる
         scanner.dismiss(animated: true, completion: nil)
     }
     //ユーザーがスキャン操作をキャンセルしたことをデリゲートに通知します。
     func imageScannerControllerDidCancel(_ scanner: ImageScannerController) {
-        //戻る
+        //閉じる
         scanner.dismiss(animated: true, completion: nil)
     }
     //ユーザーのスキャンエクスペリエンス中にエラーが発生したことをデリゲートに通知します。
     func imageScannerController(_ scanner: ImageScannerController, didFailWithError error: Error) {
-        //戻る
+        //閉じる
         scanner.dismiss(animated: true, completion: nil)
     }
     

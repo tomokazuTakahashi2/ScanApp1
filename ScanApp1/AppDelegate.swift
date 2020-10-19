@@ -34,14 +34,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var viewController:UIViewController
         storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if let window = window{
+        if UserDefaults.standard.object(forKey: "loginOK") != nil{
+            loginCheck = UserDefaults.standard.object(forKey: "loginOK")as! Int
             
-            window.rootViewController = storyboard.instantiateInitialViewController()as UIViewController?
+            //ログインしていたら、
+            if loginCheck == 1{
+                viewController = storyboard.instantiateViewController(withIdentifier: "cardVC")as UIViewController
+                nc = UINavigationController(rootViewController: viewController)
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = nc
+            //ログインしていなかったら、
+            }else{
+                if let window = window{
+
+                    window.rootViewController = storyboard.instantiateInitialViewController()as UIViewController?
+                }
+                viewController = storyboard.instantiateViewController(withIdentifier: "lineLogin")as UIViewController
+                nc = UINavigationController(rootViewController: viewController)
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                self.window?.rootViewController = nc
+            }
         }
-        viewController = storyboard.instantiateViewController(withIdentifier: "lineLogin")as UIViewController
-        nc = UINavigationController(rootViewController: viewController)
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = nc
         
         return true
     }

@@ -9,10 +9,15 @@
 import UIKit
 import Firebase
 import Lottie
+import Pastel
 
 class EditViewController: UIViewController,UITextFieldDelegate {
     
     var cardImage = UIImage()
+    //グラデーション
+    var pastelView1 = PastelView()
+    //アニメーション
+    var animationView: AnimationView! = AnimationView()
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -27,7 +32,60 @@ class EditViewController: UIViewController,UITextFieldDelegate {
         companyTextField.delegate = self
         memoTextField.delegate = self
     }
+    override func viewWillAppear(_ animated: Bool) {
+        
+        //グラデーション
+        pastelView1.removeFromSuperview(); graduationStart1()
+        NotificationCenter.default.addObserver(self, selector:
+            #selector(viewWillEnterForeground(
+                notification:)), name: UIApplication.willEnterForegroundNotification,
+                                 object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+            #selector(viewDidEnterBackground(
+                notification:)), name: UIApplication.didEnterBackgroundNotification,
+                                 object: nil)
+    }
+//MARK:- グラデーション
+    @objc func viewWillEnterForeground(notification: Notification) {
+        print("フォアグラウンド")
+        pastelView1.removeFromSuperview()
+        graduationStart1()
+    }
+    // AppDelegate -> applicationDidEnterBackgroundの通知
+    @objc func viewDidEnterBackground(notification: Notification) {
+        print("バックグラウンド")
+    }
+    func graduationStart1(){
+        pastelView1 = PastelView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height:
+            self.view.frame.size.height))
+        // Custom Direction
+        pastelView1.startPastelPoint = .bottomLeft
+        pastelView1.endPastelPoint = .topRight
+        // Custom Duration
+        pastelView1.animationDuration = 2.0
+        // Custom Color
+        pastelView1.setColors([UIColor(red: 156/255, green: 39/255, blue: 176/255, alpha: 1.0), UIColor(red: 255/255, green: 64/255, blue: 129/255, alpha: 1.0), UIColor(red: 123/255, green: 31/255, blue: 162/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 76/255, blue: 255/255, alpha: 1.0),
+                               UIColor(red: 32/255, green: 158/255, blue: 255/255, alpha: 1.0), UIColor(red: 90/255, green: 120/255, blue: 127/255, alpha: 1.0),
+                               UIColor(red: 58/255, green: 255/255, blue: 217/255, alpha: 1.0)])
+        pastelView1.startAnimation()
+        view.insertSubview(pastelView1, at: 0)
+    }
+//MARK:-アニメーション
+    func startAnimation(){
+        let animation = Animation.named("scan")
+        animationView.animation = animation
+        animationView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height:
+            self.view.frame.size.height)
+        animationView.contentMode = .scaleAspectFit
+        animationView.layer.zPosition = 1
+        animationView.loopMode = .loop
+        animationView.backgroundColor = .white
+    }
+//MARK:-Firebaseに保存
     func addData(){
+        
+        startAnimation()
         //textFieldのキーボードを閉じる
         nameTextField.resignFirstResponder()
         companyTextField.resignFirstResponder()
@@ -61,11 +119,13 @@ class EditViewController: UIViewController,UITextFieldDelegate {
                 
                 //urlがnilじゃなかったら、
                 if url != nil{
-                    let feed = ["company":self.companyTextField.text as Any,"userName":self.nameTextField.text as Any,"imageString":url?.absoluteURL as Any, "memo":self.memoTextField.text as Any,"creatAt":ServerValue.timestamp()] as [String:Any]
+                    let feed = ["company":self.companyTextField.text as Any,"userName":self.nameTextField.text as Any,"imageString":url?.absoluteString as Any, "memo":self.memoTextField.text as Any,"createAt":ServerValue.timestamp()] as [String:Any]
                     //childByAutoId().keyの名前でfeedを書き込む
                     let postFeed = ["\(key!)":feed]
                     //Database.database().reference().child("post")にpostFeedを書き込む
                     rootRef.updateChildValues(postFeed)
+                    //アニメーションを消去する
+                    self.animationView.removeFromSuperview()
                     //１つ画面を戻る
                     self.navigationController?.popViewController(animated: true)
                 }
@@ -85,5 +145,10 @@ class EditViewController: UIViewController,UITextFieldDelegate {
         companyTextField.resignFirstResponder()
         memoTextField.resignFirstResponder()
     }
-
+    
+    //登録ボタン
+    @IBAction func add(_ sender: Any) {
+        
+        addData()
+    }
 }

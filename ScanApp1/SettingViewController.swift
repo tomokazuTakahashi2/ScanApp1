@@ -17,6 +17,9 @@ class SettingViewController: UIViewController,UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //ナビゲーションバーを非表示（表示・・・false）
+        navigationController?.setNavigationBarHidden(false, animated: true)
 
         // 中心まで移動させる
         UIView.animate(withDuration: 0.3, delay: 0.2, options: [.curveLinear], animations: {
@@ -43,8 +46,8 @@ class SettingViewController: UIViewController,UIImagePickerControllerDelegate, U
         }
     }
     @IBAction func openAlbum(_ sender: Any) {
-        let sourceType: UIImagePickerController.SourceType = .camera
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
+        let sourceType: UIImagePickerController.SourceType = .photoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             
             let cameraPicker = UIImagePickerController()
             cameraPicker.sourceType = sourceType
@@ -59,7 +62,10 @@ class SettingViewController: UIViewController,UIImagePickerControllerDelegate, U
             
             imageView.image = pickedImage
             //アラートを出す
-            checkAlert()
+            DispatchQueue.main.async {
+                self.checkAlert()
+            }
+            
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -76,6 +82,7 @@ class SettingViewController: UIViewController,UIImagePickerControllerDelegate, U
             var data = Data()
             data = self.imageView.image?.pngData() as! Data
             UserDefaults.standard.set(data, forKey: "image")
+            self.navigationController?.popViewController(animated: true)
         }
         let action2 = EMAlertAction(title: "もう１度", style: .normal)
         alert.addAction(action1)
