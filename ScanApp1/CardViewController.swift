@@ -11,13 +11,16 @@ import SDWebImage
 import Firebase
 import MBDocCapture
 import Pastel
+import GoogleMobileAds
 
-class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ImageScannerControllerDelegate {
+class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ImageScannerControllerDelegate,GADInterstitialDelegate {
     
     var displayName = String()
     let refreshControl = UIRefreshControl()
     //グラデーション
     var pastelView1 = PastelView()
+    //グーグルアドモブ
+    var interstitial: GADInterstitial!
 
     @IBOutlet weak var myProfileImageView: UIImageView!
     @IBOutlet weak var displayNameLabel: UILabel!
@@ -100,6 +103,42 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         navigationController?.setNavigationBarHidden(true, animated: true)
         
         fetchData()
+    }
+//MARK:- GoogleAdMob
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("interstitialDidReceiveAd")
+        if interstitial.isReady {
+        }else{
+            interstitial.present(fromRootViewController: self)
+        }
+    }
+    /// Tells the delegate an ad request failed.
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    /// Tells the delegate that an interstitial will be presented.
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+        print("interstitialWillPresentScreen")
+    }
+    /// Tells the delegate the interstitial is to be animated off the screen.
+    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+        print("interstitialWillDismissScreen")
+    }
+    /// Tells the delegate the interstitial had been animated off the screen.
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        print("interstitialDidDismissScreen")
+    }
+    /// Tells the delegate that a user click will open another app
+    /// (such as the App Store), backgrounding the current app.
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        print("interstitialWillLeaveApplication")
+    }
+    func createAndLoadInterstitial() -> GADInterstitial {
+        // interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial = GADInterstitial(adUnitID:"ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self
+        interstitial.load(GADRequest())
+        return interstitial
     }
 //MARK:-グラデーション
     @objc func viewWillEnterForeground(notification: Notification) {
