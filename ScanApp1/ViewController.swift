@@ -9,6 +9,7 @@
 import UIKit
 import LineSDK
 import Photos
+import SVProgressHUD
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
@@ -42,18 +43,25 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     //ログインボタン
     @IBAction func loginAction(_ sender: Any) {
         
-        LoginManager.shared.login(permissions: [.profile], in: self){(result) in
+        LoginManager.shared.login(permissions: [.profile], in: self){ result in
             
             switch result{
             //成功した場合
             case .success(let loginResult):
                 
                 //loginResult.userProfileがnilじゃなかったら
-                if let profile = loginResult.userProfile{
+                if let profile = loginResult.userProfile {
                     //profile.displayNameをUserDefaultに保存
                     UserDefaults.standard.set(profile.displayName,forKey: "displayName")
-                    //String(describing: profile.pictureURL)をUserDefaultに保存
-                    UserDefaults.standard.set(String(describing: profile.pictureURL), forKey: "pictureURLString")
+                    
+                    do {
+                        let data = try Data(contentsOf: profile.pictureURL!)
+                        UserDefaults.standard.set(data, forKey: "pictureURLString")
+                    }catch let error{
+                        print(error)
+                        
+                    }
+                    
                     
                     //画面遷移
                     let cardVC = self.storyboard?.instantiateViewController(withIdentifier: "cardVC")as! CardViewController
@@ -63,6 +71,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             //失敗した場合
             case.failure(let error):
                 print(error)
+                SVProgressHUD.showError(withStatus: "ログインに失敗しました")
             }
         }
     }

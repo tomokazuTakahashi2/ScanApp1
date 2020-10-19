@@ -10,12 +10,12 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ScanApp1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lineLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="ScanApp1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-Se-alX" customClass="LoginButton" customModule="LineSDK">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-Se-alX">
                                 <rect key="frame" x="57" y="433" width="300" height="30"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -69,7 +69,7 @@
         <!--Card View Controller-->
         <scene sceneID="Cs0-nh-8Z9">
             <objects>
-                <viewController id="50p-wu-PgQ" customClass="CardViewController" customModule="ScanApp1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cardVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="50p-wu-PgQ" customClass="CardViewController" customModule="ScanApp1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Y9-BE-Mo2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,6 +158,9 @@
                                     <constraint firstAttribute="height" constant="80" id="Y5J-jf-Sol"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="toSettingView:" destination="50p-wu-PgQ" eventType="touchUpInside" id="rgG-Og-M19"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -182,11 +185,12 @@
                         <outlet property="tableView" destination="NFX-hW-WXj" id="Cp4-o6-FXo"/>
                         <segue destination="X4r-aN-tZE" kind="show" id="78P-5Q-w5S"/>
                         <segue destination="aIw-BP-27X" kind="show" id="JhB-H7-1by"/>
+                        <segue destination="HHw-s1-hGw" kind="show" id="eep-H7-tOY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MJp-dy-cof" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1834.7826086956522" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1835" y="138"/>
         </scene>
         <!--Edit View Controller-->
         <scene sceneID="Hal-Yq-4oa">
@@ -353,6 +357,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SMT-SB-ZJz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1834.7826086956522" y="846.42857142857144"/>
+        </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="lyR-CU-2rH">
+            <objects>
+                <viewController id="HHw-s1-hGw" customClass="SettingViewController" customModule="ScanApp1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Lj-x5-S36">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nli-ir-9tA">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ml-o2-WGd">
+                                <rect key="frame" x="327" y="183" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="openCamera:" destination="HHw-s1-hGw" eventType="touchUpInside" id="6Ir-6W-m9J"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFa-iF-0f5">
+                                <rect key="frame" x="20" y="575" width="46" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="openAlbum:" destination="HHw-s1-hGw" eventType="touchUpInside" id="TzW-Yi-VYd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Nli-ir-9tA" firstAttribute="top" secondItem="fnr-Dq-zNS" secondAttribute="top" id="4hq-GH-1Dd"/>
+                            <constraint firstItem="fnr-Dq-zNS" firstAttribute="trailing" secondItem="Nli-ir-9tA" secondAttribute="trailing" id="Fv2-mo-QvB"/>
+                            <constraint firstItem="Nli-ir-9tA" firstAttribute="leading" secondItem="fnr-Dq-zNS" secondAttribute="leading" id="gfk-vB-PhV"/>
+                            <constraint firstItem="fnr-Dq-zNS" firstAttribute="bottom" secondItem="Nli-ir-9tA" secondAttribute="bottom" id="hp2-0R-tZw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fnr-Dq-zNS"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xcu-JP-Bit"/>
+                    <connections>
+                        <outlet property="album" destination="NFa-iF-0f5" id="z5G-x2-9je"/>
+                        <outlet property="camera" destination="0ml-o2-WGd" id="Wo1-J0-kLk"/>
+                        <outlet property="imageView" destination="Nli-ir-9tA" id="eZZ-XD-41S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NQ0-kd-5bF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2586.9565217391305" y="845.75892857142856"/>
         </scene>
     </scenes>
 </document>

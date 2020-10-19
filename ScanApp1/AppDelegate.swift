@@ -9,14 +9,19 @@
 import UIKit
 import Firebase
 import LineSDK
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var nc:UINavigationController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+ 
+        //GoogleAdMob
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511") //テストID
             
         //Firebase
         FirebaseApp.configure()
@@ -24,12 +29,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //LINEログイン
         LoginManager.shared.setup(channelID: "1655107304", universalLinkURL: nil)
         
+        var loginCheck = Int()
+        var storyboard = UIStoryboard()
+        var viewController:UIViewController
+        storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let window = window{
+            
+            window.rootViewController = storyboard.instantiateInitialViewController()as UIViewController?
+        }
+        viewController = storyboard.instantiateViewController(withIdentifier: "lineLogin")as UIViewController
+        nc = UINavigationController(rootViewController: viewController)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = nc
+        
         return true
     }
-    //LINEログイン(iOS 12以前)
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return LoginManager.shared.application(app, open: url)
-    }
+//    //LINEログイン(iOS 12以前)
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//        return LoginManager.shared.application(app, open: url)
+//    }
 
 //iOS 13以降では、UISceneDelegateオブジェクトを呼び出して、URLを開きます。
 //    // SceneDelegate.swiftに記述

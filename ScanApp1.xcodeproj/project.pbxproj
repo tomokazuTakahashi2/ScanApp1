@@ -20,6 +20,7 @@
 		645FCDE8253B1CBF00942896 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDE7253B1CBF00942896 /* Post.swift */; };
 		645FCDEA253C842100942896 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDE9253C842100942896 /* EditViewController.swift */; };
 		645FCDEC253CC42B00942896 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDEB253CC42B00942896 /* DetailViewController.swift */; };
+		645FCDEE253D963A00942896 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FCDED253D963A00942896 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		645FCDE7253B1CBF00942896 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		645FCDE9253C842100942896 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		645FCDEB253CC42B00942896 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		645FCDED253D963A00942896 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		7F36B41DAD22A9C8FE6C6807 /* Pods-ScanApp1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanApp1.release.xcconfig"; path = "Target Support Files/Pods-ScanApp1/Pods-ScanApp1.release.xcconfig"; sourceTree = "<group>"; };
 		9E44A3E44C7E0017B8F68AF5 /* Pods_ScanApp1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScanApp1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB04E3F4A4B46B07785E4BE1 /* Pods-ScanApp1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScanApp1.debug.xcconfig"; path = "Target Support Files/Pods-ScanApp1/Pods-ScanApp1.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				645FCDE1253AEFA100942896 /* CardViewController.swift */,
 				645FCDE9253C842100942896 /* EditViewController.swift */,
 				645FCDEB253CC42B00942896 /* DetailViewController.swift */,
+				645FCDED253D963A00942896 /* SettingViewController.swift */,
 				645FCDE5253B1CAE00942896 /* Element.swift */,
 				645FCDE7253B1CBF00942896 /* Post.swift */,
 				645FCDD3253AD3C200942896 /* Main.storyboard */,
@@ -230,6 +233,7 @@
 				645FCDCE253AD3C200942896 /* AppDelegate.swift in Sources */,
 				645FCDE8253B1CBF00942896 /* Post.swift in Sources */,
 				645FCDD0253AD3C200942896 /* SceneDelegate.swift in Sources */,
+				645FCDEE253D963A00942896 /* SettingViewController.swift in Sources */,
 				645FCDE6253B1CAE00942896 /* Element.swift in Sources */,
 				645FCDEA253C842100942896 /* EditViewController.swift in Sources */,
 				645FCDEC253CC42B00942896 /* DetailViewController.swift in Sources */,

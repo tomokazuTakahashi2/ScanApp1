@@ -14,7 +14,6 @@ import MBDocCapture
 class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ImageScannerControllerDelegate {
     
     var displayName = String()
-    var pictureURLString = String()
     let refreshControl = UIRefreshControl()
 
     @IBOutlet weak var myProfileImageView: UIImageView!
@@ -48,13 +47,18 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //UserDefaultsを呼び出す
         displayName = UserDefaults.standard.object(forKey: "displayName")as! String
-        pictureURLString = UserDefaults.standard.object(forKey: "pictureURLString")as! String
+        
+        
+        var pictureURLString = UserDefaults.standard.value(forKey: "pictureURLString")as! NSData
+        self.myProfileImageView.image = UIImage(data: pictureURLString as Data)
         
         displayNameLabel.text = displayName
         
-        //SDWebImage
-        let url = URL(string: pictureURLString)
-        myProfileImageView.sd_setImage(with: url, completed: nil)
+
+        
+//        //SDWebImage
+//        let url = URL(string: pictureURLString)
+//        myProfileImageView.sd_setImage(with: url, completed: nil)
         
     }
     
@@ -210,4 +214,13 @@ class CardViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //戻る
         scanner.dismiss(animated: true, completion: nil)
     }
+    
+    //Settingへ画面遷移
+    @IBAction func toSettingView(_ sender: Any) {
+        
+        let settingVC = self.storyboard?.instantiateViewController(withIdentifier: "setting")as! SettingViewController
+        
+        self.navigationController?.pushViewController(settingVC, animated: true)
+    }
+    
 }
