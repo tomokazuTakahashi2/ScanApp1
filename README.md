@@ -3,7 +3,7 @@
 
 
 ## ライブラリ
-*MBDocCapture・・・スキャン機能
+* MBDocCapture・・・スキャン機能
 * Firebase・・・データベース
 * SDWebImage/WebP・・・画像表示機能
 * LineSDKSwift・・・LINEログイン
